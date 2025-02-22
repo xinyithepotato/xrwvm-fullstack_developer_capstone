@@ -28,7 +28,10 @@ SECRET_KEY =\
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-BASE_URL = "https://xinyi395-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai"
+BASE_URL = (
+    "https://xinyi395-8000.theiadockernext-1-labs-prod-"
+    "theiak8s-4-tor01.proxy.cognitiveclass.ai"
+)
 
 dealer_url = f"{BASE_URL}/djangoapp/get_dealers"
 
@@ -95,12 +98,12 @@ DATABASES = {
     }
 }
 
-SIMILARITY_VALIDATOR = "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        SIMILARITY_VALIDATOR,
+        'NAME':(
+            "django.contrib.auth.password_validation."
+            "UserAttributeSimilarityValidator"
+        )
     },
     {
         'NAME':
