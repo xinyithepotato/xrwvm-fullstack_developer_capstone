@@ -9,7 +9,6 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 import logging
 import json
-import requests  # Added missing import
 from .restapis import get_request, analyze_review_sentiments, post_review
 from .populate import initiate
 
@@ -57,7 +56,9 @@ def registration(request):
 
     try:
         User.objects.get(username=username)
-        return JsonResponse({"userName": username, "error": "Already Registered"})
+        return JsonResponse({
+            "userName": username,
+            "error": "Already Registered"})
     except User.DoesNotExist:
         logger.debug(f"{username} is a new user")
 
@@ -69,7 +70,9 @@ def registration(request):
         email=email,
     )
     login(request, user)
-    return JsonResponse({"userName": username, "status": "Authenticated"})
+    return JsonResponse({
+        "userName": username,
+        "status": "Authenticated"})
 
 
 # Update the `get_dealerships` function to return a list of dealerships
@@ -117,7 +120,9 @@ def add_review(request):
             return JsonResponse({"status": 200})
         except Exception as e:
             logger.error(f"Error posting review: {e}")
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse({
+                "status": 401,
+                "message": "Error in posting review"
+                })
 
     return JsonResponse({"status": 403, "message": "Unauthorized"})
-
