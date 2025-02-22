@@ -1,16 +1,16 @@
 # Uncomment the required imports before adding the code
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+#from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, redirect
+#from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import logout, login, authenticate
-from django.contrib import messages
+#from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 import logging
 import json
 from .restapis import get_request, analyze_review_sentiments, post_review
-from .populate import initiate
+#from .populate import initiate
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -91,8 +91,12 @@ def get_dealer_reviews(request, dealer_id):
 
         for review in reviews:
             try:
-                sentiment_response = analyze_review_sentiments(review["review"])
-                review["sentiment"] = sentiment_response.get("sentiment", "Unknown")
+                sentiment_response = analyze_review_sentiments(
+                    review["review"]
+                    )
+                review["sentiment"] = sentiment_response.get(
+                    "sentiment", "Unknown"
+                    )
             except Exception as e:
                 logger.error(f"Error analyzing sentiment: {e}")
 
