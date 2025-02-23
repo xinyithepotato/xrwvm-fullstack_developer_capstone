@@ -62,18 +62,32 @@ const PostReview = () => {
   }
 
   }
-  const get_dealer = async ()=>{
-    const res = await fetch(dealer_url, {
-      method: "GET"
-    });
-    const retobj = await res.json();
-    
-    if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
-      if(dealerobjs.length > 0)
-        setDealer(dealerobjs[0])
+  const get_dealer = async () => {
+    try {
+      const res = await fetch(dealer_url, { method: "GET" });
+      const retobj = await res.json();
+      console.log("Dealer API response:", retobj);
+  
+      if (retobj.status === 200 && retobj.dealer) {
+        // Check if retobj.dealer is an array
+        if (Array.isArray(retobj.dealer)) {
+          if (retobj.dealer.length > 0) {
+            setDealer(retobj.dealer[0]);
+          } else {
+            console.warn("Dealer array is empty.");
+          }
+        } else {
+          // If it's not an array, assume it's an object
+          setDealer(retobj.dealer);
+        }
+      } else {
+        console.error("Unexpected dealer response:", retobj);
+      }
+    } catch (error) {
+      console.error("Error fetching dealer data:", error);
     }
-  }
+  };
+  
 
   const get_cars = async ()=>{
     const res = await fetch(carmodels_url, {

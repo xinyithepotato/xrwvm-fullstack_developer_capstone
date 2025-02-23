@@ -89,12 +89,8 @@ def get_dealer_reviews(request, dealer_id):
 
         for review in reviews:
             try:
-                sentiment_response = analyze_review_sentiments(
-                    review["review"]
-                    )
-                review["sentiment"] = sentiment_response.get(
-                    "sentiment", "Unknown"
-                    )
+                sentiment_response = analyze_review_sentiments(review["review"])
+                review["sentiment"] = sentiment_response.get("sentiment", "Unknown")
             except Exception as e:
                 logger.error(f"Error analyzing sentiment: {e}")
 
